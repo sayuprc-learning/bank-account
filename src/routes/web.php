@@ -6,6 +6,7 @@ use App\Http\Controllers\BankAccount\Web\CreateAccountController;
 use App\Http\Controllers\BankAccount\Web\DepositController;
 use App\Http\Controllers\BankAccount\Web\ListController;
 use App\Http\Controllers\BankAccount\Web\TransferController;
+use App\Http\Controllers\BankAccount\Web\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,3 +23,6 @@ Route::post('/create', [CreateAccountController::class, 'handle']);
 
 Route::get('/deposit', [DepositController::class, 'view']);
 Route::post('/deposit', [DepositController::class, 'handle']);
+
+Route::get('/withdraw', [WithdrawController::class, 'view']);
+Route::post('/withdraw', [WithdrawController::class, 'handle']);

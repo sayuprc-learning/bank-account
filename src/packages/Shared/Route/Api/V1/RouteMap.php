@@ -6,7 +6,7 @@ namespace Shared\Route\Api\V1;
 
 enum RouteMap: string
 {
-    // 口座登録
+    // 口座作成
     case Create = 'v1.create';
 
     // 口座一覧

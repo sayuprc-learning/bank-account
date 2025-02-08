@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Shared\Route\Api\V1\RouteMap;
 
 Route::prefix('v1')->group(function () {
-    // 口座登録
+    // 口座作成
     Route::post('create', [CreateAccountController::class, 'handle'])->name(RouteMap::Create);
 
     // 口座一覧

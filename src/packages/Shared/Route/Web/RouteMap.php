@@ -6,10 +6,10 @@ namespace Shared\Route\Web;
 
 enum RouteMap: string
 {
-    // 口座登録画面
+    // 口座作成画面
     case CreateView = 'create.view';
 
-    // 口座登録
+    // 口座作成
     case Create = 'create';
 
     // 口座一覧

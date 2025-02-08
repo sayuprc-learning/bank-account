@@ -14,7 +14,7 @@ class CreateAccountTest extends TestCase
     use DatabaseTransactions;
 
     #[Test]
-    public function 口座の登録ができる(): void
+    public function 口座の作成ができる(): void
     {
         $this->post(route(RouteMap::Create), [
             'account_number' => '00000000',

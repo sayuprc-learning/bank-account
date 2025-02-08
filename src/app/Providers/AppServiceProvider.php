@@ -6,7 +6,7 @@ namespace App\Providers;
 
 use BankAccount\Applications\Transfer\TransferInteractor;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\FileInfrastructure\FileBankAccountRepository;
+use BankAccount\Infrastructure\FileBankAccountRepository;
 use BankAccount\UseCases\Transfer\TransferUseCaseInterface;
 use Illuminate\Support\ServiceProvider;
 use Shared\DebugTransaction\NopTransaction;

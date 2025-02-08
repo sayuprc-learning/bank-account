@@ -33,4 +33,19 @@ class DatabaseBankAccountRepository implements BankAccountRepositoryInterface
                 ['balance' => $bankAccount->balance->value],
             );
     }
+
+    /**
+     * @return array<BankAccount>
+     */
+    public function all(): array
+    {
+        return DB::table('bank_accounts')->get()
+            ->map(function ($record) {
+                return new BankAccount(
+                    new AccountNumber($record->account_number),
+                    new Money($record->balance)
+                );
+            })
+            ->toArray();
+    }
 }

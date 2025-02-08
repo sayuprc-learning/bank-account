@@ -25,6 +25,14 @@ class FileBankAccountRepository implements BankAccountRepositoryInterface
         Storage::put($this->getFileName($bankAccount->accountNumber), serialize($bankAccount));
     }
 
+    public function all(): array
+    {
+        return array_map(
+            fn ($fileName) => unserialize(Storage::get($fileName)),
+            array_filter(Storage::files(), fn ($file) => preg_match('/\A\d{8}\.dat\z/', $file))
+        );
+    }
+
     private function getFileName(AccountNumber $accountNumber): string
     {
         return sprintf('%s.dat', $accountNumber->value);

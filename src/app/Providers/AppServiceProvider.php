@@ -17,7 +17,7 @@ use BankAccount\UseCases\List\ListUseCaseInterface;
 use BankAccount\UseCases\Transfer\TransferUseCaseInterface;
 use BankAccount\UseCases\Withdraw\WithdrawUseCaseInterface;
 use Illuminate\Support\ServiceProvider;
-use Shared\DebugTransaction\NopTransaction;
+use Shared\DatabaseTransaction\DatabaseTransaction;
 use Shared\Transaction\TransactionInterface;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(TransactionInterface::class, NopTransaction::class);
+        $this->app->bind(TransactionInterface::class, DatabaseTransaction::class);
 
         $this->app->bind(ListUseCaseInterface::class, ListInteractor::class);
         $this->app->bind(TransferUseCaseInterface::class, TransferInteractor::class);

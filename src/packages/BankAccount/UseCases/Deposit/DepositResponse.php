@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace BankAccount\UseCases\Deposit;
 
+/**
+ * 口座入金の結果を表すクラス
+ */
 class DepositResponse
 {
     public function __construct(

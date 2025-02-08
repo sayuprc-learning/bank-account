@@ -7,6 +7,9 @@ namespace Shared\DebugTransaction;
 use Closure;
 use Shared\Transaction\TransactionInterface;
 
+/**
+ * 何もしないトランザクション管理クラス
+ */
 class NopTransaction implements TransactionInterface
 {
     /**

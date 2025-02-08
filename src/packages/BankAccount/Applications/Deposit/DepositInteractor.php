@@ -13,6 +13,9 @@ use BankAccount\UseCases\Deposit\DepositUseCaseInterface;
 use Exception;
 use Shared\Transaction\TransactionInterface;
 
+/**
+ * 口座入金のユースケースを実装したクラス
+ */
 class DepositInteractor implements DepositUseCaseInterface
 {
     public function __construct(

@@ -13,6 +13,9 @@ use BankAccount\UseCases\CreateAccount\CreateAccountUseCaseInterface;
 use Exception;
 use Shared\Transaction\TransactionInterface;
 
+/**
+ * 口座作成のユースケースを実装したクラス
+ */
 class CreateAccountInteractor implements CreateAccountUseCaseInterface
 {
     public function __construct(

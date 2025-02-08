@@ -6,6 +6,9 @@ namespace Shared\Transaction;
 
 use Closure;
 
+/**
+ * トランザクション管理の処理を抽象化したもの
+ */
 interface TransactionInterface
 {
     /**

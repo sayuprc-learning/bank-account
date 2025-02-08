@@ -9,6 +9,9 @@ use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * ファイルを利用したリポジトリの実装
+ */
 class FileBankAccountRepository implements BankAccountRepositoryInterface
 {
     public function find(AccountNumber $accountNumber): ?BankAccount

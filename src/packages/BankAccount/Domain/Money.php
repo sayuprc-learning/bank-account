@@ -7,6 +7,11 @@ namespace BankAccount\Domain;
 use Exception;
 use Shared\DomainSupport\IntegerValueObject;
 
+/**
+ * お金を表すクラス
+ *
+ * 今回のシステムではマイナスの値にならないので、マイナス値は許容していない
+ */
 class Money extends IntegerValueObject
 {
     /**

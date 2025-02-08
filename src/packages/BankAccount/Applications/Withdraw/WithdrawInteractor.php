@@ -13,6 +13,9 @@ use BankAccount\UseCases\Withdraw\WithdrawUseCaseInterface;
 use Exception;
 use Shared\Transaction\TransactionInterface;
 
+/**
+ * 口座引き落としのユースケースを実装したクラス
+ */
 class WithdrawInteractor implements WithdrawUseCaseInterface
 {
     public function __construct(

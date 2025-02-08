@@ -13,6 +13,9 @@ use BankAccount\UseCases\Transfer\TransferUseCaseInterface;
 use Exception;
 use Shared\Transaction\TransactionInterface;
 
+/**
+ * 口座振込のユースケースを実装したクラス
+ */
 class TransferInteractor implements TransferUseCaseInterface
 {
     public function __construct(

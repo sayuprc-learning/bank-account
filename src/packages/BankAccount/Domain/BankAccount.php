@@ -6,6 +6,11 @@ namespace BankAccount\Domain;
 
 use Exception;
 
+/**
+ * 口座を合わらすクラス
+ *
+ * AccountNumber を ID としている
+ */
 class BankAccount
 {
     public function __construct(

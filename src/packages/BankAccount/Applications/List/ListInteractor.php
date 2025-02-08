@@ -8,6 +8,9 @@ use BankAccount\Domain\BankAccountRepositoryInterface;
 use BankAccount\UseCases\List\ListResponse;
 use BankAccount\UseCases\List\ListUseCaseInterface;
 
+/**
+ * 口座一覧のユースケースを実装したクラス
+ */
 class ListInteractor implements ListUseCaseInterface
 {
     public function __construct(

@@ -7,6 +7,11 @@ namespace BankAccount\Domain;
 use Exception;
 use Shared\DomainSupport\StringValueObject;
 
+/**
+ * 口座番号を表すクラス
+ *
+ * 口座番号は 8 桁の数値である必要がある
+ */
 class AccountNumber extends StringValueObject
 {
     /**

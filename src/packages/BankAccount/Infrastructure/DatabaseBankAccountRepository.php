@@ -10,6 +10,9 @@ use BankAccount\Domain\BankAccountRepositoryInterface;
 use BankAccount\Domain\Money;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Laravel の DB Facade を利用したリポジトリの実装
+ */
 class DatabaseBankAccountRepository implements BankAccountRepositoryInterface
 {
     public function find(AccountNumber $accountNumber): ?BankAccount

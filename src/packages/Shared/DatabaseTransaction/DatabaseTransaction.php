@@ -8,6 +8,9 @@ use Closure;
 use Illuminate\Support\Facades\DB;
 use Shared\Transaction\TransactionInterface;
 
+/**
+ * Laravel の DB::transaction() を利用したトランザクション管理クラス
+ */
 class DatabaseTransaction implements TransactionInterface
 {
     /**

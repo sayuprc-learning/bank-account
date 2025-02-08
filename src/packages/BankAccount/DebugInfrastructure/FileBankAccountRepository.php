@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BankAccount\Infrastructure;
+namespace BankAccount\DebugInfrastructure;
 
 use BankAccount\Domain\AccountNumber;
 use BankAccount\Domain\BankAccount;

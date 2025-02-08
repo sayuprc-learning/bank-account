@@ -10,7 +10,7 @@ use BankAccount\Applications\List\ListInteractor;
 use BankAccount\Applications\Transfer\TransferInteractor;
 use BankAccount\Applications\Withdraw\WithdrawInteractor;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\Infrastructure\DatabaseBankAccountRepository;
+use BankAccount\QueryBuilderInfrastructure\QueryBuilderBankAccountRepository;
 use BankAccount\UseCases\CreateAccount\CreateAccountUseCaseInterface;
 use BankAccount\UseCases\Deposit\DepositUseCaseInterface;
 use BankAccount\UseCases\List\ListUseCaseInterface;
@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DepositUseCaseInterface::class, DepositInteractor::class);
         $this->app->bind(WithdrawUseCaseInterface::class, WithdrawInteractor::class);
 
-        $this->app->bind(BankAccountRepositoryInterface::class, DatabaseBankAccountRepository::class);
+        $this->app->bind(BankAccountRepositoryInterface::class, QueryBuilderBankAccountRepository::class);
     }
 
     /**

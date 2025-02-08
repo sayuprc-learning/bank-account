@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BankAccount\Infrastructure;
+namespace BankAccount\QueryBuilderInfrastructure;
 
 use BankAccount\Domain\AccountNumber;
 use BankAccount\Domain\BankAccount;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * Laravel の DB Facade を利用したリポジトリの実装
  */
-class DatabaseBankAccountRepository implements BankAccountRepositoryInterface
+class QueryBuilderBankAccountRepository implements BankAccountRepositoryInterface
 {
     public function find(AccountNumber $accountNumber): ?BankAccount
     {

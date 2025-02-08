@@ -61,7 +61,7 @@ class CreateAccountInteractorTest extends TestCase
     public function 入金額が0未満の場合_例外が投げられる(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('入金額は 0 以上の必要があります');
+        $this->expectExceptionMessage('入金額は 0 以上である必要があります');
 
         $this->bankAccountRepository->shouldNotReceive('find');
         $this->bankAccountRepository->shouldNotReceive('save');

@@ -28,7 +28,7 @@ class TransferInteractor implements TransferUseCaseInterface
     {
         $result = $this->scope->transaction(function () use ($request) {
             if ($request->amount < 1) {
-                throw new Exception('振込額は 1 以上の必要があります');
+                throw new Exception('振込額は 1 以上である必要があります');
             }
 
             if ($request->fromAccountNumber === $request->toAccountNumber) {

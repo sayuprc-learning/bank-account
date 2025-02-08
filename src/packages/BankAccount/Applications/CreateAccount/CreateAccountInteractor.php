@@ -28,7 +28,7 @@ class CreateAccountInteractor implements CreateAccountUseCaseInterface
     {
         $this->scope->transaction(function () use ($request) {
             if ($request->amount < 0) {
-                throw new Exception('入金額は 0 以上の必要があります');
+                throw new Exception('入金額は 0 以上である必要があります');
             }
 
             if (! is_null($this->bankAccountRepository->find($accountNumber = new AccountNumber($request->accountNumber)))) {

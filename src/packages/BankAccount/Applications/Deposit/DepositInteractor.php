@@ -28,7 +28,7 @@ class DepositInteractor implements DepositUseCaseInterface
     {
         $result = $this->scope->transaction(function () use ($request) {
             if ($request->amount < 1) {
-                throw new Exception('入金額は 1 以上の必要があります');
+                throw new Exception('入金額は 1 以上である必要があります');
             }
 
             if (is_null($bankAccount = $this->bankAccountRepository->find(new AccountNumber($request->accountNumber)))) {

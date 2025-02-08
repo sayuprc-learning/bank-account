@@ -82,7 +82,7 @@ class TransferInteractorTest extends TestCase
     public function 振込額が1未満の場合_例外が投げられる(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('振込額は 1 以上の必要があります');
+        $this->expectExceptionMessage('振込額は 1 以上である必要があります');
 
         $this->bankAccountRepository->shouldNotReceive('find');
         $this->bankAccountRepository->shouldNotReceive('save');

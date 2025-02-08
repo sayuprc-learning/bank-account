@@ -28,7 +28,7 @@ class WithdrawInteractor implements WithdrawUseCaseInterface
     {
         $result = $this->scope->transaction(function () use ($request) {
             if ($request->amount < 1) {
-                throw new Exception('引き落とし額は 1 以上の必要があります');
+                throw new Exception('引き落とし額は 1 以上である必要があります');
             }
 
             if (is_null($bankAccount = $this->bankAccountRepository->find(new AccountNumber($request->accountNumber)))) {

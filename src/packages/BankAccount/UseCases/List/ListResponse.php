@@ -11,7 +11,7 @@ class ListResponse
     /**
      * @param array<BankAccount> $bankAccounts
      */
-    public function __construct(array $bankAccounts)
+    public function __construct(public readonly array $bankAccounts)
     {
     }
 }

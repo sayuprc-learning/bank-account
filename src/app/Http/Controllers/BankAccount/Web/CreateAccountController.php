@@ -10,6 +10,7 @@ use BankAccount\UseCases\CreateAccount\CreateAccountUseCaseInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Shared\Route\Web\RouteMap;
 
 class CreateAccountController extends Controller
 {
@@ -30,6 +31,6 @@ class CreateAccountController extends Controller
 
         $interactor->handle(new CreateAccountRequest($accountNumber, $amount));
 
-        return redirect('/list');
+        return redirect()->route(RouteMap::List);
     }
 }

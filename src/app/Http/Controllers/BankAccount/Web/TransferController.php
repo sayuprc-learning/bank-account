@@ -10,6 +10,7 @@ use BankAccount\UseCases\Transfer\TransferUseCaseInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Shared\Route\Web\RouteMap;
 
 class TransferController extends Controller
 {
@@ -32,6 +33,6 @@ class TransferController extends Controller
 
         $interactor->handle(new TransferRequest($fromAccountNumber, $toAccountNumber, $amount));
 
-        return redirect('/list');
+        return redirect()->route(RouteMap::List);
     }
 }

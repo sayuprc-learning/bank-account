@@ -10,6 +10,7 @@ use BankAccount\UseCases\Deposit\DepositUseCaseInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Shared\Route\Web\RouteMap;
 
 class DepositController extends Controller
 {
@@ -30,6 +31,6 @@ class DepositController extends Controller
 
         $interactor->handle(new DepositRequest($accountNumber, $amount));
 
-        return redirect('/list');
+        return redirect()->route(RouteMap::List);
     }
 }

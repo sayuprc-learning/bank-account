@@ -7,6 +7,7 @@ namespace Tests\Feature\BankAccount\Api\V1;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
+use Shared\Route\Api\V1\RouteMap;
 use Tests\TestCase;
 
 class ListTest extends TestCase
@@ -21,7 +22,7 @@ class ListTest extends TestCase
             'balance' => 0,
         ]);
 
-        $this->get('/api/v1/list')
+        $this->get(route(RouteMap::List))
             ->assertStatus(200)
             ->assertJson([
                 [

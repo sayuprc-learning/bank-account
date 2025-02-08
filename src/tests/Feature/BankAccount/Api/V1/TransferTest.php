@@ -7,6 +7,7 @@ namespace Tests\Feature\BankAccount\Api\V1;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
+use Shared\Route\Api\V1\RouteMap;
 use Tests\TestCase;
 
 class TransferTest extends TestCase
@@ -27,7 +28,7 @@ class TransferTest extends TestCase
             ],
         ]);
 
-        $this->post('/api/v1/transfer', [
+        $this->post(route(RouteMap::Transfer), [
             'from_account_number' => '11111111',
             'to_account_number' => '00000000',
             'amount' => 50,

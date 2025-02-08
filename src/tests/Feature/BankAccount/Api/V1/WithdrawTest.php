@@ -7,6 +7,7 @@ namespace Tests\Feature\BankAccount\Api\V1;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
+use Shared\Route\Api\V1\RouteMap;
 use Tests\TestCase;
 
 class WithdrawTest extends TestCase
@@ -21,7 +22,7 @@ class WithdrawTest extends TestCase
             'balance' => 1000,
         ]);
 
-        $this->post('/api/v1/withdraw', [
+        $this->post(route(RouteMap::Withdraw), [
             'account_number' => '00000000',
             'amount' => 100,
         ])->assertStatus(200)

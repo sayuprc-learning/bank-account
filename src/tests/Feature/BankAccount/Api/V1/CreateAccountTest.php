@@ -6,6 +6,7 @@ namespace Tests\Feature\BankAccount\Api\V1;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use PHPUnit\Framework\Attributes\Test;
+use Shared\Route\Api\V1\RouteMap;
 use Tests\TestCase;
 
 class CreateAccountTest extends TestCase
@@ -15,7 +16,7 @@ class CreateAccountTest extends TestCase
     #[Test]
     public function 口座の登録ができる(): void
     {
-        $this->post('/api/v1/create', [
+        $this->post(route(RouteMap::Create), [
             'account_number' => '00000000',
             'amount' => 0,
         ])->assertStatus(200)

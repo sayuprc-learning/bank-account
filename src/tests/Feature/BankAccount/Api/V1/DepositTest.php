@@ -7,6 +7,7 @@ namespace Tests\Feature\BankAccount\Api\V1;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
+use Shared\Route\Api\V1\RouteMap;
 use Tests\TestCase;
 
 class DepositTest extends TestCase
@@ -21,7 +22,7 @@ class DepositTest extends TestCase
             'balance' => 0,
         ]);
 
-        $this->post('/api/v1/deposit', [
+        $this->post(route(RouteMap::Deposit), [
             'account_number' => '00000000',
             'amount' => 100000,
         ])->assertStatus(200)

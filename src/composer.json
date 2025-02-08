@@ -56,7 +56,10 @@
         "ecs": "vendor/bin/ecs check --ansi --no-progress-bar",
         "ecs-fix": "vendor/bin/ecs check --fix --ansi --no-progress-bar",
         "phpstan": "phpstan analyse --memory-limit=-1 --no-progress",
-        "phpstan-clear-cache": "phpstan clear-result-cache"
+        "phpstan-clear-cache": "phpstan clear-result-cache",
+        "test-all": "php artisan test --env=testing",
+        "test-unit": "php artisan test tests/Unit",
+        "test-feature": "php artisan test tests/Feature --env=testing"
     },
     "extra": {
         "laravel": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\BankAccount\Api\v1;
+namespace App\Http\Controllers\BankAccount\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Dto\BankAccount\ListDto;

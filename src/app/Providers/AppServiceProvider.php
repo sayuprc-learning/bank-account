@@ -18,6 +18,8 @@ use BankAccount\UseCases\Transfer\TransferUseCaseInterface;
 use BankAccount\UseCases\Withdraw\WithdrawUseCaseInterface;
 use Illuminate\Support\ServiceProvider;
 use Shared\DatabaseTransaction\DatabaseTransaction;
+use Shared\NumericStringGenerator\NumericStringGenerator;
+use Shared\Random\RandomGeneratorInterface;
 use Shared\Transaction\TransactionInterface;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(TransactionInterface::class, DatabaseTransaction::class);
+        $this->app->bind(RandomGeneratorInterface::class, NumericStringGenerator::class);
 
         $this->app->bind(ListUseCaseInterface::class, ListInteractor::class);
         $this->app->bind(TransferUseCaseInterface::class, TransferInteractor::class);

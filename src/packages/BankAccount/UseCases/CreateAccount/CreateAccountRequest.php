@@ -9,9 +9,7 @@ namespace BankAccount\UseCases\CreateAccount;
  */
 class CreateAccountRequest
 {
-    public function __construct(
-        public readonly string $accountNumber,
-        public readonly int $amount,
-    ) {
+    public function __construct(public readonly int $amount)
+    {
     }
 }

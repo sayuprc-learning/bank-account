@@ -16,10 +16,15 @@ class CreateAccountTest extends TestCase
     #[Test]
     public function 口座の作成ができる(): void
     {
-        $this->post(route(RouteMap::Create), [
-            'account_number' => '00000000',
+        $response = $this->post(route(RouteMap::Create), [
             'amount' => 0,
-        ])->assertStatus(200)
-            ->assertJson([]);
+        ])->assertStatus(200);
+
+        $json = json_decode($response->getContent());
+
+        $this->assertObjectHasProperty('balance', $json);
+        $this->assertSame(0, $json->balance);
+        // 口座番号はランダムなので存在のチェックのみを行う
+        $this->assertObjectHasProperty('account_number', $json);
     }
 }

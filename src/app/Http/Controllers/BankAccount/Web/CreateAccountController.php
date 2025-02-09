@@ -22,14 +22,12 @@ class CreateAccountController extends Controller
     public function handle(Request $request, CreateAccountUseCaseInterface $interactor): RedirectResponse
     {
         $validated = $request->validate([
-            'account_number' => ['required', 'regex:/\A\d{8}\z/'],
             'amount' => ['required', 'integer', 'min:0'],
         ]);
 
-        $accountNumber = $validated['account_number'];
         $amount = (int)$validated['amount'];
 
-        $interactor->handle(new CreateAccountRequest($accountNumber, $amount));
+        $interactor->handle(new CreateAccountRequest($amount));
 
         return redirect()->route(RouteMap::List);
     }

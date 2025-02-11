@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\BankAccount\Domain;
 
 use BankAccount\Domain\AccountNumber;
+use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\Money;
 use Exception;
@@ -19,7 +20,7 @@ class BankAccountTest extends TestCase
     public function インスタンス化できる(string $number, int $amount): void
     {
         $accountNumber = new AccountNumber($number);
-        $balance = new Money($amount);
+        $balance = new Balance($amount);
         $bankAccount = new BankAccount($accountNumber, $balance);
 
         $this->assertSame($accountNumber, $bankAccount->accountNumber);
@@ -41,7 +42,7 @@ class BankAccountTest extends TestCase
     public function 加算テスト(string $number, int $amount, int $addition): void
     {
         $accountNumber = new AccountNumber($number);
-        $balance = new Money($amount);
+        $balance = new Balance($amount);
         $bankAccount = new BankAccount($accountNumber, $balance);
 
         $additionMoney = new Money($addition);
@@ -65,7 +66,7 @@ class BankAccountTest extends TestCase
     public function 減算テスト(string $number, int $amount, int $subtraction): void
     {
         $accountNumber = new AccountNumber($number);
-        $balance = new Money($amount);
+        $balance = new Balance($amount);
         $bankAccount = new BankAccount($accountNumber, $balance);
 
         $subtractionMoney = new Money($subtraction);
@@ -91,7 +92,7 @@ class BankAccountTest extends TestCase
         $this->expectExceptionMessage('残高不足です');
 
         $accountNumber = new AccountNumber($number);
-        $balance = new Money($amount);
+        $balance = new Balance($amount);
         $bankAccount = new BankAccount($accountNumber, $balance);
 
         $subtractionMoney = new Money($subtraction);

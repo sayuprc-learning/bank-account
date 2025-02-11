@@ -6,9 +6,9 @@ namespace Tests\Unit\BankAccount\Applications\Transfer;
 
 use BankAccount\Applications\Transfer\TransferInteractor;
 use BankAccount\Domain\AccountNumber;
+use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\Domain\Money;
 use BankAccount\UseCases\Transfer\TransferRequest;
 use Exception;
 use Mockery;
@@ -38,7 +38,7 @@ class TransferInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Money(1)))
+            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Balance(1)))
             ->once();
 
         $this->bankAccountRepository->shouldReceive('find')
@@ -46,7 +46,7 @@ class TransferInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '99999999';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('99999999'), new Money(0)))
+            ->andReturn(new BankAccount(new AccountNumber('99999999'), new Balance(0)))
             ->once();
 
         $this->bankAccountRepository->shouldReceive('save')
@@ -144,7 +144,7 @@ class TransferInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Money(1)))
+            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Balance(1)))
             ->once();
 
         $this->bankAccountRepository->shouldReceive('find')
@@ -175,7 +175,7 @@ class TransferInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Money(0)))
+            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Balance(0)))
             ->once();
 
         $this->bankAccountRepository->shouldReceive('find')
@@ -183,7 +183,7 @@ class TransferInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '99999999';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('99999999'), new Money(0)))
+            ->andReturn(new BankAccount(new AccountNumber('99999999'), new Balance(0)))
             ->once();
 
         $this->bankAccountRepository->shouldNotReceive('save');

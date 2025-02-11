@@ -6,9 +6,9 @@ namespace Tests\Unit\BankAccount\Applications\Withdraw;
 
 use BankAccount\Applications\Withdraw\WithdrawInteractor;
 use BankAccount\Domain\AccountNumber;
+use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\Domain\Money;
 use BankAccount\UseCases\Withdraw\WithdrawRequest;
 use Exception;
 use Mockery;
@@ -38,7 +38,7 @@ class WithdrawInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Money(1)))
+            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Balance(1)))
             ->once();
 
         $this->bankAccountRepository->shouldReceive('save')
@@ -111,7 +111,7 @@ class WithdrawInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Money(0)))
+            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Balance(0)))
             ->once();
 
         $this->bankAccountRepository->shouldNotReceive('save');

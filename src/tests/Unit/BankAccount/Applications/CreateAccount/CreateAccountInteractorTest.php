@@ -6,9 +6,9 @@ namespace Tests\Unit\BankAccount\Applications\CreateAccount;
 
 use BankAccount\Applications\CreateAccount\CreateAccountInteractor;
 use BankAccount\Domain\AccountNumber;
+use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\Domain\Money;
 use BankAccount\UseCases\CreateAccount\CreateAccountRequest;
 use Exception;
 use Mockery;
@@ -110,7 +110,7 @@ class CreateAccountInteractorTest extends TestCase
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Money(1)))
+            ->andReturn(new BankAccount(new AccountNumber('00000000'), new Balance(1)))
             ->once();
 
         $this->bankAccountRepository->shouldNotReceive('save');

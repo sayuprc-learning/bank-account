@@ -9,8 +9,6 @@ use Shared\DomainSupport\IntegerValueObject;
 
 /**
  * お金を表すクラス
- *
- * 今回のシステムではマイナスの値にならないので、マイナス値は許容していない
  */
 class Money extends IntegerValueObject
 {
@@ -19,30 +17,6 @@ class Money extends IntegerValueObject
      */
     public function __construct(int $value)
     {
-        if ($value < 0) {
-            throw new Exception('金額は 0 以上でなければいけません');
-        }
-
         parent::__construct($value);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function add(Money $other): self
-    {
-        return new Money($this->value + $other->value);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function subtract(Money $other): self
-    {
-        if ($this->value < $other->value) {
-            throw new Exception('残高不足です');
-        }
-
-        return new Money($this->value - $other->value);
     }
 }

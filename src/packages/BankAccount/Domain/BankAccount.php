@@ -15,7 +15,7 @@ class BankAccount
 {
     public function __construct(
         public readonly AccountNumber $accountNumber,
-        private(set) Money $balance,
+        private(set) Balance $balance,
     ) {
     }
 

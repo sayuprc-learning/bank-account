@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BankAccount\QueryBuilderInfrastructure;
 
 use BankAccount\Domain\AccountNumber;
+use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\Domain\Money;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -25,7 +25,7 @@ class QueryBuilderBankAccountRepository implements BankAccountRepositoryInterfac
             return null;
         }
 
-        return new BankAccount($accountNumber, new Money($found->balance));
+        return new BankAccount($accountNumber, new Balance($found->balance));
     }
 
     public function save(BankAccount $bankAccount): void
@@ -46,7 +46,7 @@ class QueryBuilderBankAccountRepository implements BankAccountRepositoryInterfac
             ->map(function ($record) {
                 return new BankAccount(
                     new AccountNumber($record->account_number),
-                    new Money($record->balance)
+                    new Balance($record->balance)
                 );
             })
             ->toArray();

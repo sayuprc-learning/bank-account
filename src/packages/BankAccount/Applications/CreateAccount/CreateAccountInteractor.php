@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BankAccount\Applications\CreateAccount;
 
 use BankAccount\Domain\AccountNumber;
+use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\Domain\Money;
 use BankAccount\UseCases\CreateAccount\CreateAccountRequest;
 use BankAccount\UseCases\CreateAccount\CreateAccountResponse;
 use BankAccount\UseCases\CreateAccount\CreateAccountUseCaseInterface;
@@ -40,7 +40,7 @@ class CreateAccountInteractor implements CreateAccountUseCaseInterface
                 throw new Exception('指定の口座番号は使えません');
             }
 
-            $bankAccount = new BankAccount($accountNumber, new Money($request->amount));
+            $bankAccount = new BankAccount($accountNumber, new Balance($request->amount));
 
             $this->bankAccountRepository->save($bankAccount);
 

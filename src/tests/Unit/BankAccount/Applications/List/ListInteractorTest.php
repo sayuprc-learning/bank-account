@@ -6,9 +6,9 @@ namespace Tests\Unit\BankAccount\Applications\List;
 
 use BankAccount\Applications\List\ListInteractor;
 use BankAccount\Domain\AccountNumber;
+use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
-use BankAccount\Domain\Money;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
@@ -46,12 +46,12 @@ class ListInteractorTest extends TestCase
     {
         $bankAccount1 = new BankAccount(
             new AccountNumber('00000000'),
-            new Money(100),
+            new Balance(100),
         );
 
         $bankAccount2 = new BankAccount(
             new AccountNumber('99999999'),
-            new Money(10000),
+            new Balance(10000),
         );
 
         $this->bankAccountRepository->shouldReceive('all')

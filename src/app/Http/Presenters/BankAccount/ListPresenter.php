@@ -16,7 +16,7 @@ class ListPresenter
         return array_map(
             fn ($bankAccount) => [
                 'account_number' => $bankAccount->accountNumber->value,
-                'balance' => $bankAccount->balance->value,
+                'balance' => number_format($bankAccount->balance->value),
             ],
             $outputData->bankAccounts
         );

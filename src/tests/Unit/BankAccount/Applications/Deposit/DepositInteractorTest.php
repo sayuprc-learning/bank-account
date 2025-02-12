@@ -9,6 +9,7 @@ use BankAccount\Domain\AccountNumber;
 use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
+use BankAccount\Domain\BankAccountService;
 use BankAccount\UseCases\Deposit\DepositRequest;
 use Exception;
 use Mockery;
@@ -22,18 +23,21 @@ class DepositInteractorTest extends TestCase
 {
     private BankAccountRepositoryInterface&MockInterface $bankAccountRepository;
 
+    private BankAccountService&MockInterface $bankAccountService;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->app->bind(TransactionInterface::class, NopTransaction::class);
         $this->bankAccountRepository = Mockery::mock(BankAccountRepositoryInterface::class);
+        $this->bankAccountService = Mockery::mock(BankAccountService::class);
     }
 
     #[Test]
     public function 入金に成功する場合(): void
     {
-        $this->bankAccountRepository->shouldReceive('find')
+        $this->bankAccountService->shouldReceive('getBankAccount')
             ->with(Mockery::on(function ($arg) {
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
@@ -49,9 +53,11 @@ class DepositInteractorTest extends TestCase
             }))
             ->once();
 
-        $this->bankAccountRepository->shouldNotReceive('all');
-
-        $interactor = new DepositInteractor($this->app->make(TransactionInterface::class), $this->bankAccountRepository);
+        $interactor = new DepositInteractor(
+            $this->app->make(TransactionInterface::class),
+            $this->bankAccountRepository,
+            $this->bankAccountService,
+        );
 
         $request = new DepositRequest('00000000', 1);
         $response = $interactor->handle($request);
@@ -66,11 +72,14 @@ class DepositInteractorTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('入金額は 1 以上である必要があります');
 
-        $this->bankAccountRepository->shouldNotReceive('find');
+        $this->bankAccountService->shouldNotReceive('getBankAccount');
         $this->bankAccountRepository->shouldNotReceive('save');
-        $this->bankAccountRepository->shouldNotReceive('all');
 
-        $interactor = new DepositInteractor($this->app->make(TransactionInterface::class), $this->bankAccountRepository);
+        $interactor = new DepositInteractor(
+            $this->app->make(TransactionInterface::class),
+            $this->bankAccountRepository,
+            $this->bankAccountService,
+        );
 
         $request = new DepositRequest('00000000', 0);
         $interactor->handle($request);
@@ -80,20 +89,23 @@ class DepositInteractorTest extends TestCase
     public function 入金先口座が見つからない場合_例外が投げられる(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('入金先口座が見つかりませんでした');
+        $this->expectExceptionMessage('口座が存在しません: 00000000');
 
-        $this->bankAccountRepository->shouldReceive('find')
+        $this->bankAccountService->shouldReceive('getBankAccount')
             ->with(Mockery::on(function ($arg) {
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturnNull()
+            ->andThrow(new Exception('口座が存在しません: 00000000'))
             ->once();
 
         $this->bankAccountRepository->shouldNotReceive('save');
-        $this->bankAccountRepository->shouldNotReceive('all');
 
-        $interactor = new DepositInteractor($this->app->make(TransactionInterface::class), $this->bankAccountRepository);
+        $interactor = new DepositInteractor(
+            $this->app->make(TransactionInterface::class),
+            $this->bankAccountRepository,
+            $this->bankAccountService,
+        );
 
         $request = new DepositRequest('00000000', 1);
         $interactor->handle($request);

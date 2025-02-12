@@ -9,6 +9,7 @@ use BankAccount\Domain\AccountNumber;
 use BankAccount\Domain\Balance;
 use BankAccount\Domain\BankAccount;
 use BankAccount\Domain\BankAccountRepositoryInterface;
+use BankAccount\Domain\BankAccountService;
 use BankAccount\UseCases\Withdraw\WithdrawRequest;
 use Exception;
 use Mockery;
@@ -22,18 +23,21 @@ class WithdrawInteractorTest extends TestCase
 {
     private BankAccountRepositoryInterface&MockInterface $bankAccountRepository;
 
+    private BankAccountService&MockInterface $bankAccountService;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->app->bind(TransactionInterface::class, NopTransaction::class);
         $this->bankAccountRepository = Mockery::mock(BankAccountRepositoryInterface::class);
+        $this->bankAccountService = Mockery::mock(BankAccountService::class);
     }
 
     #[Test]
     public function 引き落としに成功する場合(): void
     {
-        $this->bankAccountRepository->shouldReceive('find')
+        $this->bankAccountService->shouldReceive('getBankAccount')
             ->with(Mockery::on(function ($arg) {
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
@@ -49,9 +53,11 @@ class WithdrawInteractorTest extends TestCase
             }))
             ->once();
 
-        $this->bankAccountRepository->shouldNotReceive('all');
-
-        $interactor = new WithdrawInteractor($this->app->make(TransactionInterface::class), $this->bankAccountRepository);
+        $interactor = new WithdrawInteractor(
+            $this->app->make(TransactionInterface::class),
+            $this->bankAccountRepository,
+            $this->bankAccountService,
+        );
 
         $request = new WithdrawRequest('00000000', 1);
         $response = $interactor->handle($request);
@@ -67,11 +73,14 @@ class WithdrawInteractorTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('引き落とし額は 1 以上である必要があります');
 
-        $this->bankAccountRepository->shouldNotReceive('find');
+        $this->bankAccountService->shouldNotReceive('getBankAccount');
         $this->bankAccountRepository->shouldNotReceive('save');
-        $this->bankAccountRepository->shouldNotReceive('all');
 
-        $interactor = new WithdrawInteractor($this->app->make(TransactionInterface::class), $this->bankAccountRepository);
+        $interactor = new WithdrawInteractor(
+            $this->app->make(TransactionInterface::class),
+            $this->bankAccountRepository,
+            $this->bankAccountService,
+        );
 
         $request = new WithdrawRequest('00000000', 0);
         $interactor->handle($request);
@@ -81,20 +90,23 @@ class WithdrawInteractorTest extends TestCase
     public function 引き落とし先口座が見つからない場合_例外が投げられる(): void
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('引き落とし先口座が見つかりませんでした');
+        $this->expectExceptionMessage('口座が存在しません: 00000000');
 
-        $this->bankAccountRepository->shouldReceive('find')
+        $this->bankAccountService->shouldReceive('getBankAccount')
             ->with(Mockery::on(function ($arg) {
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
             }))
-            ->andReturnNull()
+            ->andThrow(new Exception('口座が存在しません: 00000000'))
             ->once();
 
         $this->bankAccountRepository->shouldNotReceive('save');
-        $this->bankAccountRepository->shouldNotReceive('all');
 
-        $interactor = new WithdrawInteractor($this->app->make(TransactionInterface::class), $this->bankAccountRepository);
+        $interactor = new WithdrawInteractor(
+            $this->app->make(TransactionInterface::class),
+            $this->bankAccountRepository,
+            $this->bankAccountService,
+        );
 
         $request = new WithdrawRequest('00000000', 1);
         $interactor->handle($request);
@@ -106,7 +118,7 @@ class WithdrawInteractorTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('残高不足です');
 
-        $this->bankAccountRepository->shouldReceive('find')
+        $this->bankAccountService->shouldReceive('getBankAccount')
             ->with(Mockery::on(function ($arg) {
                 return $arg instanceof AccountNumber
                     && $arg->value === '00000000';
@@ -115,9 +127,12 @@ class WithdrawInteractorTest extends TestCase
             ->once();
 
         $this->bankAccountRepository->shouldNotReceive('save');
-        $this->bankAccountRepository->shouldNotReceive('all');
 
-        $interactor = new WithdrawInteractor($this->app->make(TransactionInterface::class), $this->bankAccountRepository);
+        $interactor = new WithdrawInteractor(
+            $this->app->make(TransactionInterface::class),
+            $this->bankAccountRepository,
+            $this->bankAccountService,
+        );
 
         $request = new WithdrawRequest('00000000', 1);
         $interactor->handle($request);

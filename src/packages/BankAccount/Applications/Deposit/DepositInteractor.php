@@ -6,6 +6,7 @@ namespace BankAccount\Applications\Deposit;
 
 use BankAccount\Domain\AccountNumber;
 use BankAccount\Domain\BankAccountRepositoryInterface;
+use BankAccount\Domain\BankAccountService;
 use BankAccount\Domain\Money;
 use BankAccount\UseCases\Deposit\DepositRequest;
 use BankAccount\UseCases\Deposit\DepositResponse;
@@ -21,6 +22,7 @@ class DepositInteractor implements DepositUseCaseInterface
     public function __construct(
         private readonly TransactionInterface $scope,
         private readonly BankAccountRepositoryInterface $bankAccountRepository,
+        private readonly BankAccountService $bankAccountService,
     ) {
     }
 
@@ -31,9 +33,7 @@ class DepositInteractor implements DepositUseCaseInterface
                 throw new Exception('入金額は 1 以上である必要があります');
             }
 
-            if (is_null($bankAccount = $this->bankAccountRepository->find(new AccountNumber($request->accountNumber)))) {
-                throw new Exception('入金先口座が見つかりませんでした');
-            }
+            $bankAccount = $this->bankAccountService->getBankAccount(new AccountNumber($request->accountNumber));
 
             $amount = new Money($request->amount);
 

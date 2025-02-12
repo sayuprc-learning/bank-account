@@ -6,6 +6,7 @@ namespace BankAccount\Applications\Transfer;
 
 use BankAccount\Domain\AccountNumber;
 use BankAccount\Domain\BankAccountRepositoryInterface;
+use BankAccount\Domain\BankAccountService;
 use BankAccount\Domain\Money;
 use BankAccount\UseCases\Transfer\TransferRequest;
 use BankAccount\UseCases\Transfer\TransferResponse;
@@ -21,6 +22,7 @@ class TransferInteractor implements TransferUseCaseInterface
     public function __construct(
         private readonly TransactionInterface $scope,
         private readonly BankAccountRepositoryInterface $bankAccountRepository,
+        private readonly BankAccountService $bankAccountService,
     ) {
     }
 
@@ -35,13 +37,8 @@ class TransferInteractor implements TransferUseCaseInterface
                 throw new Exception('振込元口座と振込先口座を同じにすることはできません');
             }
 
-            if (is_null($fromBankAccount = $this->bankAccountRepository->find(new AccountNumber($request->fromAccountNumber)))) {
-                throw new Exception('振込元口座が見つかりませんでした');
-            }
-
-            if (is_null($toBankAccount = $this->bankAccountRepository->find(new AccountNumber($request->toAccountNumber)))) {
-                throw new Exception('振込先口座が見つかりませんでした');
-            }
+            $fromBankAccount = $this->bankAccountService->getBankAccount(new AccountNumber($request->fromAccountNumber));
+            $toBankAccount = $this->bankAccountService->getBankAccount(new AccountNumber($request->toAccountNumber));
 
             $amount = new Money($request->amount);
 

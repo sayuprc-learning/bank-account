@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: echo
-        run: echo ${{ needs.setup-php.outputs }}
+        run: echo ${{ needs.setup-php.outputs.version }}
       # - name: Create Database
       #   shell: bash
       #   run: |

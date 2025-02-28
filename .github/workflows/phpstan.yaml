@@ -17,6 +17,9 @@ jobs:
       - name: Run PHPStan
         run: pwd
 
+      - name: version
+        run: php -v
+
       # - name: Run PHPStan
       #   run: |
       #     cd src

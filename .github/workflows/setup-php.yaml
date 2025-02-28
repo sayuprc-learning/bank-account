@@ -3,7 +3,7 @@ name: Setup PHP
 on:
   workflow_call:
     outputs:
-      php-version:
+      version:
         value: ${{ jobs.php-version.outputs.version }}
 
 jobs:

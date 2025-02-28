@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Run PHPStan
-        run: pwd
+        run: ls
 
-      - name: version
-        run: php -v
+#      - name: version
+#        run: php -v
 
       # - name: Run PHPStan
       #   run: |

@@ -1,0 +1,20 @@
+name: PHPStan
+
+on: pull_request
+
+jobs:
+  setup-php:
+    uses: ./.github/workflows/setup-php.yaml
+
+  analyse:
+    needs: setup-php
+
+    name: PHPStan (PHP ${{ needs.setup-php.outputs.php-version }})
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run PHPStan
+        run: |
+          cd src
+          composer phpstan

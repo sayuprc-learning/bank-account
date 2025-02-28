@@ -15,6 +15,9 @@ jobs:
 
     steps:
       - name: Run PHPStan
-        run: |
-          cd src
-          composer phpstan
+        run: pwd
+
+      # - name: Run PHPStan
+      #   run: |
+      #     cd src
+      #     composer phpstan

@@ -3,20 +3,20 @@ name: PHPUnit
 on: pull_request
 
 jobs:
-  setup-php:
-    uses: ./.github/workflows/setup-php.yaml
+  # setup-php:
+  #   uses: ./.github/workflows/setup-php.yaml
 
   test:
-    needs:
-      - setup-php
+    # needs:
+    #   - setup-php
 
-    name: PHPUnit (PHP ${{ needs.setup-php.outputs.php-version }})
+    # name: PHPUnit (PHP ${{ needs.setup-php.outputs.php-version }})
 
     runs-on: ubuntu-latest
 
     steps:
       - name: echo
-        run: echo $GITHUB_ENV
+        run: echo $GITHUB_OUTPUT
       # - name: Create Database
       #   shell: bash
       #   run: |

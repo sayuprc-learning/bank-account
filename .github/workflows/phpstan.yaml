@@ -3,24 +3,42 @@ name: PHPStan
 on: pull_request
 
 jobs:
-  setup-php:
-    uses: ./.github/workflows/setup-php.yaml
-
   analyse:
-    needs: setup-php
-
-    name: PHPStan (PHP ${{ needs.setup-php.outputs.php-version }})
+    name: PHPStan
 
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run PHPStan
-        run: ls
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
-#      - name: version
-#        run: php -v
+      - name: Image Tag
+        id: image-tag
+        run: |
+          CACHE_PATH="/tmp/docker_cache_${{ env.ARCH }}"
+          echo "CACHE_PATH=${CACHE_PATH}" >> $GITHUB_OUTPUT
 
-      # - name: Run PHPStan
-      #   run: |
-      #     cd src
-      #     composer phpstan
+      - name: Cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.image-tag.outputs.CACHE_PATH }}
+          key: ${{ steps.image-tag.outputs.CACHE_PATH }}
+
+      - name: Build
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          make build
+          mkdir -p ${{ steps.image-tag.outputs.CACHE_PATH }}
+          docker save bank-account-php:8.4 > ${{ steps.image-tag.outputs.CACHE_PATH }}/bank-account-php:8.4.tar
+
+      - name: Load
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          docker load -i ${{ steps.image-tag.outputs.CACHE_PATH }}/bank-account-php:8.4.tar
+
+      - name: Run
+        run:
+          docker compose run --rm php php -v

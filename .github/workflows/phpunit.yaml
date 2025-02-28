@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: echo
-        run: echo ${{ needs.setup-php.outputs.version }}
+        run: echo $GITHUB_ENV
       # - name: Create Database
       #   shell: bash
       #   run: |
